@@ -1,0 +1,36 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('productos', function (Blueprint $table) {
+            $table->id();
+            $table->string('nombre');
+            $table->string('descripcion');
+            $table->double('precio');
+            $table->integer('cantidad_disponible');
+            $table->foreignId('id_categoria')->references('id')->on('categorias');
+            $table->foreignId('id_carrito')->references('id')->on('carrito');
+            $table->foreignId('id_tipo')->references('id')->on('tipos_cabello');
+            $table->foreignId('id_condicion')->references('id')->on('condiciones_cabello');
+            $table->enum('estado', ['disponible','agotado','descontinuado']);
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('productos');
+    }
+};

@@ -15,15 +15,17 @@ class Producto extends Model
     }
 
     public function carrito(){
-        return $this->belongsTo(Carrito::class, 'id_carrito');
+        return $this->HasMany(Carrito::class, 'id_carrito');
     }
 
-    /*public function tipoCabello(){
-        return $this->belongsTo(TipoCabello::class, 'id_tipo');
+    public function tipoCabello(){
+        return $this->HasMany(TipoCabello::class, 'id_tipo');
     }
 
     public function condicionCabello(){
-        return $this->belongsTo(CondicionCabello::class, 'id_condicion');
-    }*/
+        return $this->HasMany(CondicionCabello::class, 'id_condicion');
+    }
+
+    public $timestamps=false;
 
 }

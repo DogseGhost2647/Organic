@@ -11,4 +11,8 @@ class Usuario extends Model
 
     protected $hidden=['password'];
 
+    public function carrito(){
+        return $this->belongsTo(Carrito::class,'id_carrito');
+    }
+
 }

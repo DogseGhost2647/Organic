@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class CondicionCabello extends Model
 {
-    protected $table = 'condiciones_cabello';
+    protected $table = 'condicion_cabellos';
     protected $fillable = ['nombre','descripcion'];
 
     public function producto(){

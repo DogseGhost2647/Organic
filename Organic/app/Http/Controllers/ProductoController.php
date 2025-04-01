@@ -4,15 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\Producto;
 use Illuminate\Http\Request;
+use App\Contracts\ProductoServiceInterface;
+use App\Models\Categoria;
+use App\Models\CondicionCabello;
 
 class ProductoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    protected $productoService;
+
+    public function __construct(ProductoServiceInterface $productoService)
+    {
+        $this->productoService = $productoService;
+    }
+
     public function index()
     {
-        //
+        $productos = $this->productoService->listarProductos();
+        return view('productos.index');
     }
 
     /**
@@ -20,7 +28,10 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        //
+        $categorias = Categoria::all();
+        $condiciones = CondicionCabello::all();
+
+        return view('productos.create', compact('categorias','condiciones'));
     }
 
     /**
@@ -28,7 +39,29 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'descripcion' => 'required|string',
+            'precio' => 'required|numeric',
+            'cantidad_disponible' => 'required|integer',
+            'estado' => 'required|in:disponible,no disponible',
+            'id_categoria' => 'required|exists:categorias,id',
+            'condicion_cabello' => 'required|exists:condiciones,id',
+            'tipo_cabello' => 'required|exists:tipos,id',
+        ]);
+
+        Producto::create([
+            'nombre' => $request->nombre,
+            'descripcion' => $request->descripcion,
+            'precio' => $request->precio,
+            'cantidad_disponible' => $request->cantidad_disponible,
+            'estado' => $request->estado,
+            'id_categoria' => $request->id_categoria,
+            'condicion_cabello' => $request->condicion_cabello,
+            'tipo_cabello' => $request->tipo_cabello,
+        ]);
+
+        return redirect()->route('producto.index')->with('success', 'Producto creado exitosamente!');
     }
 
     /**

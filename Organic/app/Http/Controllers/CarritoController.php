@@ -3,18 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\Carrito;
+use App\Models\Producto;
 use App\Models\Usuario;
 use App\Services\CarritoService;
 use Illuminate\Http\Request;
 
 class CarritoController extends Controller
 {
+    protected $carritoService;
+
+    public function __construct(CarritoService $carritoService)
+    {
+        $this->carritoService = $carritoService;
+    }
     public function index()
     {
-        $carrito = Carrito::with(['Usuario', 'cantidad'])->get();
-        return view('carrito.index', compact('carrito'));
+        $carrito = Carrito::with(['producto'])->get();
+        $productos = Producto::all();
 
-        $carrito = $this->carritoService->obtenerCarrito();
         return view('carrito.index', compact('carrito'));
     }
 
@@ -58,10 +64,5 @@ class CarritoController extends Controller
         return redirect()->route('carrito.index')->with('success', 'Producto eliminado del carrito.');
     }
     
-    protected $carritoService;
-
-    public function __construct(CarritoService $carritoService)
-    {
-        $this->carritoService = $carritoService;
-    }
+    
 }

@@ -2,27 +2,33 @@
 
 namespace App\Services;
 
+use App\Contracts\CarritoServiceInterface;
 use App\Models\Carrito;
 
-class CarritoService
+class CarritoService implements CarritoServiceInterface
 {
-    public function obtenerCarrito()
-    {
-        return Carrito::with(['usuario', 'producto'])->get();
+    public function listarCarritos(){
+        return Carrito::all();
+    }
+    public function obtenerCarrito(int $id){
+        return Carrito::findOrFail($id);
     }
 
-    public function agregarProducto($data)
+    public function crearCarrito($datos)
     {
-        return Carrito::create($data);
+        return Carrito::create($datos);
     }
 
-    public function actualizarProducto(Carrito $carrito, $data)
+    public function actualizarCarrito(int $id, array $datos)
     {
-        return $carrito->update($data);
+        $carrito = Carrito::findOrFail($id);
+        $carrito->update($datos);
+        return $carrito;
     }
 
-    public function eliminarProducto(Carrito $carrito)
+    public function eliminarCarrito(int $id)
     {
-        return $carrito->delete();
+        $carrito = Carrito::findOrFail($id);
+        $carrito->delete();
     }
 }

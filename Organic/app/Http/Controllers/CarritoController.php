@@ -3,63 +3,65 @@
 namespace App\Http\Controllers;
 
 use App\Models\Carrito;
+use App\Models\Usuario;
+use App\Services\CarritoService;
 use Illuminate\Http\Request;
 
 class CarritoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $carrito = Carrito::with(['Usuario', 'cantidad'])->get();
+        return view('carrito.index', compact('carrito'));
+
+        $carrito = $this->carritoService->obtenerCarrito();
+        return view('carrito.index', compact('carrito'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view ('carrito.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'id_usuario' => 'required|exists:users,id',
+            'cantidad' => 'required|integer|min:1',
+        ]);
+        Carrito::create($request->all());
+        return redirect()->route('carrito.index')->with('success', 'Producto agregado al carrito.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Carrito $carrito)
     {
-        //
+        return view('carrito.show', compact('carrito'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Carrito $carrito)
     {
-        //
+        return view('carrito.edit', compact('carrito'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Carrito $carrito)
     {
-        //
+        $request->validate([
+            'cantidad' => 'required|integer|min:1',
+        ]);
+        $carrito->update($request->all());
+        return redirect()->route('carrito.index')->with('success', 'Carrito actualizado.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Carrito $carrito)
     {
-        //
+        $carrito->delete();
+        return redirect()->route('carrito.index')->with('success', 'Producto eliminado del carrito.');
+    }
+    
+    protected $carritoService;
+
+    public function __construct(CarritoService $carritoService)
+    {
+        $this->carritoService = $carritoService;
     }
 }

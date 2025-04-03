@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Producto;
 use Illuminate\Http\Request;
+<<<<<<< HEAD
 use App\Contracts\ProductoServiceInterface;
 use App\Models\Categoria;
 use App\Models\CondicionCabello;
@@ -30,16 +31,32 @@ class ProductoController extends Controller
 
     return view('productos.index', compact('productos', 'categorias', 'condiciones'));
 }
+=======
+
+class ProductoController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        //
+    }
+>>>>>>> jose
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
+<<<<<<< HEAD
         $categorias = Categoria::all();
         $condiciones = CondicionCabello::all();
 
         return view('productos.create', compact('categorias','condiciones'));
+=======
+        //
+>>>>>>> jose
     }
 
     /**
@@ -47,6 +64,7 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
+<<<<<<< HEAD
         $request->validate([
             'nombre' => 'required|string|max:255',
             'descripcion' => 'required|string',
@@ -75,6 +93,9 @@ class ProductoController extends Controller
 
 
         return redirect()->route('productos.create')->with('success', 'Producto creado exitosamente!');
+=======
+        //
+>>>>>>> jose
     }
 
     /**
@@ -89,17 +110,24 @@ class ProductoController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(Producto $producto)
+<<<<<<< HEAD
 {
     $categorias = Categoria::all();
     $condiciones = CondicionCabello::all();
 
     return view('productos.update', compact('producto', 'categorias', 'condiciones'));
 }
+=======
+    {
+        //
+    }
+>>>>>>> jose
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Producto $producto)
+<<<<<<< HEAD
 {
     $request->validate([
         'nombre' => 'required|string|max:255',
@@ -131,12 +159,22 @@ class ProductoController extends Controller
     return redirect()->route('productos.index')->with('success', 'Producto actualizado correctamente.');
 }
 
+=======
+    {
+        //
+    }
+
+>>>>>>> jose
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Producto $producto)
     {
+<<<<<<< HEAD
         $this->productoService->eliminarProducto($producto->id);
         return redirect()->route('productos.index')->with('success', 'Producto eliminado correctamente.');
+=======
+        //
+>>>>>>> jose
     }
 }

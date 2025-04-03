@@ -1,12 +1,16 @@
-@extends('layouts.app')
-@section('content')
+<div class="modal fade" id="modal{{ $producto->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Producto</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="{{ route('productos.update', $producto->id) }}">
+          @csrf
+          @method('PUT')
 
-<div class="card" style="width: 58rem;">
-  <div class="card-body">
-    <h5 class="card-title">Agregar producto</h5>
-    <form method="POST" action="{{ route('productos.store') }}">
-        @csrf
-        <div class="form-group">
+          <div class="form-group">
             <label for="nombre">Nombre:</label>
             <input type="text" id="nombre" name="nombre" class="form-control" required>
         </div>
@@ -38,13 +42,10 @@
                 @endforeach
             </select>
         </div>
-        <button type="submit" class="form-control">Guardar Producto</button>
-    </form>
-    @if (session('success'))
-    <div class="alert alert-success" role="alert">
-        {{ session('success') }}
+
+          <button type="submit" class="btn btn-primary mt-3">Actualizar producto</button>
+        </form>
+      </div>
     </div>
-    @endif
   </div>
 </div>
-@endsection

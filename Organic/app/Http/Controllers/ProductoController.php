@@ -18,10 +18,13 @@ class ProductoController extends Controller
     }
 
     public function index()
-    {
-        $productos = $this->productoService->listarProductos();
-        return view('productos.index');
-    }
+{   
+    $productos = Producto::with(['categoria', 'condicionCabello'])->get();
+    $categorias = Categoria::all();
+    $condiciones = CondicionCabello::all();
+
+    return view('productos.index', compact('productos', 'categorias', 'condiciones'));
+}
 
     /**
      * Show the form for creating a new resource.
@@ -44,10 +47,8 @@ class ProductoController extends Controller
             'descripcion' => 'required|string',
             'precio' => 'required|numeric',
             'cantidad_disponible' => 'required|integer',
-            'estado' => 'required|in:disponible,no disponible',
             'id_categoria' => 'required|exists:categorias,id',
-            'condicion_cabello' => 'required|exists:condiciones,id',
-            'tipo_cabello' => 'required|exists:tipos,id',
+            'id_condicion' => 'required|exists:condicion_cabellos,id',
         ]);
 
         Producto::create([
@@ -55,13 +56,13 @@ class ProductoController extends Controller
             'descripcion' => $request->descripcion,
             'precio' => $request->precio,
             'cantidad_disponible' => $request->cantidad_disponible,
-            'estado' => $request->estado,
             'id_categoria' => $request->id_categoria,
-            'condicion_cabello' => $request->condicion_cabello,
-            'tipo_cabello' => $request->tipo_cabello,
+            'id_condicion' => $request->id_condicion,
+            'id_tipo' => $request->tipo_cabello,
         ]);
 
-        return redirect()->route('producto.index')->with('success', 'Producto creado exitosamente!');
+
+        return redirect()->route('productos.create')->with('success', 'Producto creado exitosamente!');
     }
 
     /**
@@ -77,22 +78,44 @@ class ProductoController extends Controller
      */
     public function edit(Producto $producto)
     {
-        //
+        $categorias = Categoria::all();
+        $condiciones = CondicionCabello::all();
+
+        return view('productos.update', compact('productos', 'categorias', 'condiciones'));
     }
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Producto $producto)
-    {
-        //
-    }
+{
+    $request->validate([
+        'nombre' => 'required|string|max:255',
+        'descripcion' => 'required|string',
+        'precio' => 'required|numeric',
+        'cantidad_disponible' => 'required|integer',
+        'id_categoria' => 'required|exists:categorias,id',
+        'id_condicion' => 'required|exists:condicion_cabellos,id',
+    ]);
+
+    $producto->update([
+        'nombre' => $request->nombre,
+        'descripcion' => $request->descripcion,
+        'precio' => $request->precio,
+        'cantidad_disponible' => $request->cantidad_disponible,
+        'id_categoria' => $request->id_categoria,
+        'id_condicion' => $request->id_condicion,
+    ]);
+
+    return redirect()->route('productos.index')->with('success', 'Producto actualizado correctamente.');
+}
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Producto $producto)
     {
-        //
+        $this->productoService->eliminarProducto($producto->id);
+        return redirect()->route('productos.index')->with('success', 'Producto eliminado correctamente.');
     }
 }

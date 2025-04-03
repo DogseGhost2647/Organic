@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('cantidad_disponible');
             $table->foreignId('id_categoria')->constrained('categorias');
             $table->foreignId('id_condicion')->constrained('condicion_cabellos');
-            $table->enum('estado', ['disponible','agotado','descontinuado']);
+            $table->enum('estado', ['disponible','agotado']);
             $table->timestamps();
         });
     }

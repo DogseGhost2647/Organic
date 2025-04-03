@@ -8,7 +8,7 @@ class Producto extends Model
 {
     protected $table = 'productos';
 
-    protected $fillable = ['nombre','descripcion','precio','cantidad_disponible','id_categoria','id_carrito','id_tipo','id_condicion','estado'];
+    protected $fillable = ['nombre','descripcion','precio','cantidad_disponible','id_categoria','id_condicion'];
 
     public function categoria(){
         return $this->belongsTo(Categoria::class, 'id_categoria');
@@ -23,7 +23,7 @@ class Producto extends Model
     }
 
     public function condicionCabello(){
-        return $this->HasMany(CondicionCabello::class, 'id_condicion');
+        return $this->belongsTo(CondicionCabello::class, 'id_condicion');
     }
 
     public $timestamps=false;

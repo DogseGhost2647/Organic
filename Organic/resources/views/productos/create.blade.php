@@ -4,7 +4,7 @@
 <div class="card" style="width: 58rem;">
   <div class="card-body">
     <h5 class="card-title">Agregar producto</h5>
-    <form method="POST" action="{{ route('productos.store') }}">
+    <form method="POST" action="{{ route('productos.store') }}" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label for="nombre">Nombre:</label>
@@ -37,6 +37,10 @@
                     <option value="{{ $condicion->id }}">{{ $condicion->nombre }}</option>
                 @endforeach
             </select>
+        </div>
+        <div class="form-group">
+            <label for="imagen">Imagen del producto:</label>
+            <input type="file" name="imagen" id="imagen" class="form-control">
         </div>
         <button type="submit" class="form-control">Guardar Producto</button>
     </form>

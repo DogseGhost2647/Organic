@@ -17,6 +17,11 @@ class ProductoController extends Controller
         $this->productoService = $productoService;
     }
 
+    public function inicio(){
+        $productos = Producto::where('estado', 'disponible')->get();
+        return view('inicio', compact('productos'));
+    }
+
     public function index()
 {   
     $productos = Producto::with(['categoria', 'condicionCabello'])->get();
@@ -49,7 +54,13 @@ class ProductoController extends Controller
             'cantidad_disponible' => 'required|integer',
             'id_categoria' => 'required|exists:categorias,id',
             'id_condicion' => 'required|exists:condicion_cabellos,id',
+            'imagen' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
         ]);
+
+        $rutaImagen = null;
+            if ($request->hasFile('imagen')) {
+                $rutaImagen = $request->file('imagen')->store('productos', 'public'); // Guarda en storage/app/public/productos
+            }
 
         Producto::create([
             'nombre' => $request->nombre,
@@ -59,6 +70,7 @@ class ProductoController extends Controller
             'id_categoria' => $request->id_categoria,
             'id_condicion' => $request->id_condicion,
             'id_tipo' => $request->tipo_cabello,
+            'imagen' => $rutaImagen,
         ]);
 
 
@@ -77,12 +89,12 @@ class ProductoController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(Producto $producto)
-    {
-        $categorias = Categoria::all();
-        $condiciones = CondicionCabello::all();
+{
+    $categorias = Categoria::all();
+    $condiciones = CondicionCabello::all();
 
-        return view('productos.update', compact('productos', 'categorias', 'condiciones'));
-    }
+    return view('productos.update', compact('producto', 'categorias', 'condiciones'));
+}
 
     /**
      * Update the specified resource in storage.
@@ -96,7 +108,15 @@ class ProductoController extends Controller
         'cantidad_disponible' => 'required|integer',
         'id_categoria' => 'required|exists:categorias,id',
         'id_condicion' => 'required|exists:condicion_cabellos,id',
+        'imagen' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
     ]);
+
+    // Manejar imagen nueva si se sube
+    if ($request->hasFile('imagen')) {
+        $rutaImagen = $request->file('imagen')->store('productos', 'public');
+    } else {
+        $rutaImagen = $producto->imagen; // Mantener la imagen actual
+    }
 
     $producto->update([
         'nombre' => $request->nombre,
@@ -105,6 +125,7 @@ class ProductoController extends Controller
         'cantidad_disponible' => $request->cantidad_disponible,
         'id_categoria' => $request->id_categoria,
         'id_condicion' => $request->id_condicion,
+        'imagen' => $rutaImagen, // Guardar la imagen actualizada
     ]);
 
     return redirect()->route('productos.index')->with('success', 'Producto actualizado correctamente.');

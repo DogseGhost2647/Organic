@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductoController;
 use App\Models\Producto;
 
+Route::get('/', [ProductoController::class, 'inicio'])->name('productos.inicio');
 Route::get('/productos/create', [ProductoController::class, 'create'])->name('productos.create');
 Route::post('/productos/store', [ProductoController::class, 'store'])->name('productos.store');
 Route::get('/productos/index', [ProductoController::class, 'index'])->name('productos.index');

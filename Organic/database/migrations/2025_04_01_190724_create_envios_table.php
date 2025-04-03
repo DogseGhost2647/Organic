@@ -12,15 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('envios', function (Blueprint $table): void {
-            $table->id('id_envio'); // Clave primaria
-            $table->integer('id_pedido')->unsigned(); // Clave foránea 
+            $table->id();
+            $table->foreignId('id_pedido')->references('id')->on('pedidos');
             $table->text('direccion_envio');
             $table->dateTime('fecha_envio')->nullable();
             $table->dateTime('fecha_entrega')->nullable();
             $table->timestamps();
-
-            // Definir la clave foránea correctamente
-            $table->foreign('id_pedido')->references('id_pedido')->on('pedidos')->onDelete('cascade');
         });
     }
 

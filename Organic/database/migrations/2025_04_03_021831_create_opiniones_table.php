@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pedidos', function (Blueprint $table) {
+        Schema::create('opiniones', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('id_producto')->references('id')->on('productos');
             $table->foreignId('id_usuario')->references('id')->on('usuarios');
-            $table->dateTime('fecha_pedido')->nullable();
-            $table->enum('estado', ['pendiente', 'procesado', 'enviado', 'entregado', 'cancelado']);
-            $table->double('total');
+            $table->integer('calificacion')->nullable()->default(0); 
+            $table->text('comentario');
+            $table->dateTime('fecha_opinion')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pedidos');
+        Schema::dropIfExists('opiniones');
     }
 };

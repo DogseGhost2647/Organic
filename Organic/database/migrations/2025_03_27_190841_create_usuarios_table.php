@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('direccion');
             $table->string('password');
             $table->enum('rol', ['cliente', 'administrador']);
-            $table->foreignId('id_carrito')->constrained('carritos');
             $table->timestamps();
         });
     }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+<<<<<<< HEAD
 Route::get('/', function () {
     return view('welcome');
 });
@@ -18,3 +19,11 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+=======
+Route::get('/', [ProductoController::class, 'inicio'])->name('productos.inicio');
+Route::get('/productos/create', [ProductoController::class, 'create'])->name('productos.create');
+Route::post('/productos/store', [ProductoController::class, 'store'])->name('productos.store');
+Route::get('/productos/index', [ProductoController::class, 'index'])->name('productos.index');
+Route::put('/productos/{producto}', [ProductoController::class, 'update'])->name('productos.update');
+Route::delete('/productos/{producto}', [ProductoController::class, 'destroy'])->name('productos.destroy');
+>>>>>>> 6632efa5d3104d54d645f7fb2e32360d56c60208

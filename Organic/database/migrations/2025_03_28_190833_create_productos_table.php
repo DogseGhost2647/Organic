@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('id_categoria')->constrained('categorias');
             $table->foreignId('id_condicion')->constrained('condicion_cabellos');
             $table->enum('estado', ['disponible','agotado']);
+            $table->foreignId('id_tipo')->references('id')->on('tipo_cabellos')->onDelete('cascade');
             $table->timestamps();
         });
     }

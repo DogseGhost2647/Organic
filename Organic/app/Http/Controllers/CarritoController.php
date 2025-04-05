@@ -14,55 +14,98 @@ class CarritoController extends Controller
 
     public function __construct(CarritoService $carritoService)
     {
+
         $this->carritoService = $carritoService;
+
     }
+
     public function index()
     {
-        $carrito = Carrito::with(['producto'])->get();
-        $productos = Producto::all();
 
-        return view('carrito.index', compact('carrito'));
+        $carritos = Carrito::with(['producto', 'usuario'])->get();
+        $productos = Producto::all();
+        $usuarios = Usuario::all();
+
+        return view('carritos.index', compact('carritos', 'productos', 'usuarios'));
+
     }
 
     public function create()
     {
-        return view ('carrito.create');
+
+        $productos = Producto::all();
+        $usuarios = Usuario::all();
+
+        return view('carritos.create', compact('productos', 'usuarios'));
+
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'id_usuario' => 'required|exists:users,id',
-            'cantidad' => 'required|integer|min:1',
+            'id_usuario' => 'required|exists:usuarios,id',
+            'id_producto' => 'required|exists:productos,id',
+            'cantidad_productos' => 'required|integer|min:1',
+            'precio_total' => 'required|numeric'
         ]);
-        Carrito::create($request->all());
-        return redirect()->route('carrito.index')->with('success', 'Producto agregado al carrito.');
+
+        Carrito::create([
+            'id_usuario' => $request->id_usuario,
+            'id_producto' => $request->id_producto,
+            'cantidad_productos' => $request->cantidad_productos,
+            'precio_total' => $request->precio_total,
+        ]);
+
+        return redirect()->route('carritos.index')->with('success', 'Producto agregado al carrito.');
+        
     }
 
-    public function show(Carrito $carrito)
+    public function show(Producto $producto)
     {
-        return view('carrito.show', compact('carrito'));
+        //
     }
 
     public function edit(Carrito $carrito)
     {
-        return view('carrito.edit', compact('carrito'));
+
+    $usuarios = Usuario::all();
+    $productos = Producto::all();
+
+    return view('carritos.edit', compact('carrito', 'usuarios', 'productos'));
+    
     }
 
-    public function update(Request $request, Carrito $carrito)
+    public function update(Request $request, $id)
     {
+
         $request->validate([
-            'cantidad' => 'required|integer|min:1',
+            'id_usuario' => 'required|exists:usuarios,id',
+            'id_producto' => 'required|exists:productos,id',
+            'cantidad_productos' => 'required|integer|min:1',
+            'precio_total' => 'required|numeric'
         ]);
-        $carrito->update($request->all());
-        return redirect()->route('carrito.index')->with('success', 'Carrito actualizado.');
+
+        $carrito = Carrito::findOrFail($id);
+    
+        $carrito->update([
+            'id_usuario' => $request->id_usuario,
+            'id_producto' => $request->id_producto,
+            'cantidad_productos' => $request->cantidad_productos,
+            'precio_total' => $request->precio_total,
+
+        ]);
+    
+        return redirect()->route('carritos.index')->with('success', 'Carrito actualizado correctamente.');
+
     }
 
-    public function destroy(Carrito $carrito)
+    public function destroy($id)
     {
+        
+        $carrito = Carrito::findOrFail($id);
         $carrito->delete();
-        return redirect()->route('carrito.index')->with('success', 'Producto eliminado del carrito.');
+        
+        return redirect()->route('carritos.index')->with('success', 'Carrito eliminado en exito.');
+
     }
-    
-    
 }

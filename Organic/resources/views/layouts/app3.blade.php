@@ -20,12 +20,14 @@
             text-decoration: underline;
         }
         .container {
-            text-align: center;
-            margin-top: 4rem; /* Ajustado para que no esté pegado al navbar */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Hace que ocupe toda la pantalla */
         }
         .card {
             width: 100%;
-            max-width: 400px;
+            max-width: 500px; /* Ajuste de tamaño para mejor apariencia */
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
         }
@@ -62,27 +64,20 @@
 <body>
 
 <nav class="navbar navbar-expand-lg">
-    <div class="container-fluid">
-        <a class="navbar-brand text-white" href="/home">O-RGANIC</a>
+    <div class="container-fluid d-flex justify-content-between">
+        <a class="navbar-brand text-white" href="/">O-RGANIC</a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-            <ul class="navbar-nav align-items-center">
-                <li class="nav-item me-3">
-                    <a href="{{ route('productos.create') }}" class="btn btn-light border border-success text-success rounded-pill px-3">
-                        Agregar Producto
-                    </a>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/registro">Registrarse</a>
                 </li>
                 <li class="nav-item">
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" class="btn btn-link text-white text-decoration-none" style="font-weight: bold;">
-                            Cerrar sesión
-                        </button>
-                    </form>
+                    <a class="nav-link" href="/login">Iniciar sesión</a>
                 </li>
             </ul>
         </div>

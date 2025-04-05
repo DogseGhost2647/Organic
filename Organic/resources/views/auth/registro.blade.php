@@ -1,32 +1,39 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro</title>
-</head>
-<body>
-    <h2>Registro de Usuario</h2>
 
-    @if (session('success'))
-        <p style="color: green;">{{ session('success') }}</p>
-    @endif
+@extends('layouts.app3')
+@section('content')
+<div class="container">
+    <div class="card p-4">
+        <h2 class="text-center">Registro</h2>
 
-    <form method="POST" action="{{ route('registro') }}">
-        @csrf
-        <input type="text" name="nombre" placeholder="Nombre" required>
-        <input type="email" name="correo" placeholder="Correo" required>
-        <input type="text" name="telefono" placeholder="Teléfono" required>
-        <input type="text" name="direccion" placeholder="Dirección" required>
-        <input type="password" name="password" placeholder="Contraseña" required>
-        <input type="password" name="password_confirmation" placeholder="Confirmar Contraseña" required>
-        
-        <select name="rol">
-            <option value="cliente">Cliente</option>
-            <option value="administrador">Administrador</option>
-        </select>
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
 
-        <button type="submit">Registrarse</button>
-    </form>
-</body>
-</html>
+        <form method="POST" action="{{ route('registro') }}">
+            @csrf
+            <div class="mb-3">
+                <input type="text" name="nombre" class="form-control" placeholder="Nombre" required>
+            </div>
+            <div class="mb-3">
+                <input type="email" name="correo" class="form-control" placeholder="Correo electrónico" required>
+            </div>
+            <div class="mb-3">
+                <input type="text" name="telefono" class="form-control" placeholder="Teléfono" required>
+            </div>
+            <div class="mb-3">
+                <input type="text" name="direccion" class="form-control" placeholder="Dirección" required>
+            </div>
+            <div class="mb-3">
+                <input type="password" name="password" class="form-control" placeholder="Contraseña" required>
+            </div>
+            <div class="mb-3">
+                <input type="password" name="password_confirmation" class="form-control" placeholder="Confirmar Contraseña" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Registrarse</button>
+        </form>
+    </div>
+</div>
+@endsection
+

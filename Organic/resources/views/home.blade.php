@@ -1,19 +1,9 @@
-@extends('layouts.app2')
+@extends('layouts.app4')
 
 @section('content')
 <div class="container">
     <div class="container center">
-    <h1 class="fw-bold">Bienvenido a <span style="color: #333;">Or-ganic</span></h1>
-    <p class="fs-5">
-        Bienvenido a tu tienda virtual, donde encontrarás una exclusiva selección de productos 100% naturales 
-        diseñados para realzar la belleza y salud de tu cabello.
-    </p>
-    </div>
-    
-    <a href="/registro" class="btn-register">Registrarse</a>
-    <a href="/login" class="login-link">Iniciar Sesión</a>
-    <div class="container swiper">
-        <h2>Productos mas vendidos!</h2>
+        <h2>Productos disponibles</h2>
     </div>
     <div class="row">
         @foreach ($productos as $producto)

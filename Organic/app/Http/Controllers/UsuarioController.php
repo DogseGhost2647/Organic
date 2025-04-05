@@ -4,15 +4,27 @@ namespace App\Http\Controllers;
 
 use App\Models\Usuario;
 use Illuminate\Http\Request;
+use App\Models\Producto;
+use App\Models\Categoria;
+use App\Models\CondicionCabello;
 
 class UsuarioController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    public function home(){
+        
+        $productos = Producto::with(['categoria', 'condicionCabello'])->get();
+        $categorias = Categoria::all();
+        $condiciones = CondicionCabello::all();
+
+        return view('home', compact('productos', 'categorias', 'condiciones'));
+    }
+
     public function index()
     {
-        //
+        
     }
 
     /**

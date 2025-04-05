@@ -62,30 +62,18 @@
 <body>
 
 <nav class="navbar navbar-expand-lg">
-    <div class="container-fluid">
+    <div class="container-fluid d-flex justify-content-between">
         <a class="navbar-brand text-white" href="/home">O-RGANIC</a>
+
+        <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+        @csrf
+            <button type="submit" class="btn btn-link text-white text-decoration-none p-0 m-0" style="font-weight: bold;">Cerrar sesión</button>
+        </form>
+
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-            <ul class="navbar-nav align-items-center">
-                <li class="nav-item me-3">
-                    <a href="{{ route('productos.create') }}" class="btn btn-light border border-success text-success rounded-pill px-3">
-                        Agregar Producto
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" class="btn btn-link text-white text-decoration-none" style="font-weight: bold;">
-                            Cerrar sesión
-                        </button>
-                    </form>
-                </li>
-            </ul>
-        </div>
     </div>
 </nav>
 

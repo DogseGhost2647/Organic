@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class TipoCabello extends Model
 {
-    protected $table = 'tipos_cabello';
+    protected $table = 'tipo_cabellos';
     protected $fillable = ['nombre','descripcion'];
     public $timestamps = false;
 

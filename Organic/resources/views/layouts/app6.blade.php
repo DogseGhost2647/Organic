@@ -10,6 +10,9 @@
         body {
             background-color: #f8f9fa;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         /* Navbar estilos */
@@ -51,9 +54,13 @@
             font-weight: bold;
         }
 
-        .container {
-            text-align: center;
-            margin-top: 5rem;
+        /* Contenedor principal flex para centrar contenido */
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
         }
 
         /* Cards */
@@ -107,6 +114,10 @@
             text-decoration: underline;
             color: #8e44ad;
         }
+        
+        .card {
+        margin: auto;
+        }
     </style>
 </head>
 <body>
@@ -116,36 +127,26 @@
 
         <a class="navbar-brand text-white" href="/home">O-RGANIC</a>
 
-        <div class="d-flex align-items-center">
-        @auth
-            @if (Auth::user() && Auth::user()->isAdmin())
-                <a class="nav-link text-white me-3 position-relative" href="{{ route('productos.index') }}">Gestionar Productos</a>
-            @endif
-
-        @endauth
-
-            <a class="nav-link text-white me-3 position-relative" href="/carrito/index">
-                <i class="bi bi-cart-fill fs-5"></i> Carrito
-            @php
-                $cartCount = \App\Models\Carrito::where('id_usuario', Auth::id())->sum('cantidad_productos');
-            @endphp
-
-            <span class="cart-badge">{{ $cartCount }}</span>
-            </a>
-
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="btn btn-link text-white text-decoration-none p-0 m-0 fw-bold">Cerrar sesión</button>
-            </form>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav align-items-center">
+                <li class="nav-item me-3">
+                    <a href="{{ route('productos.index') }}" class="btn btn-light border border-success text-success rounded-pill px-3">
+                        Ver productos
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="btn btn-link text-white text-decoration-none" style="font-weight: bold;">
+                            Cerrar sesión
+                        </button>
+                    </form>
+                </li>
+            </ul>
         </div>
-
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
 </nav>
 
-<div class="container">
+<div class="main-content">
     @yield('content')
 </div>
 

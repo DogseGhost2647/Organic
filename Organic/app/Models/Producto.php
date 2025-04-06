@@ -8,14 +8,14 @@ class Producto extends Model
 {
     protected $table = 'productos';
 
-    protected $fillable = ['nombre','descripcion','precio','cantidad_disponible','id_categoria','id_condicion'];
+    protected $fillable = ['nombre','descripcion','precio','cantidad_disponible','id_categoria','id_condicion','id_tipo'];
 
     public function categoria(){
         return $this->belongsTo(Categoria::class, 'id_categoria');
     }
 
-    public function carrito(){
-        return $this->HasMany(Carrito::class, 'id_carrito');
+    public function carritos(){
+        return $this->HasMany(Carrito::class, 'id_producto');
     }
 
     public function tipoCabello(){

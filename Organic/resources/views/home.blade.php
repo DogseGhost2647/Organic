@@ -14,7 +14,14 @@
                     <h5 class="card-title">{{ $producto->nombre }}</h5>
                     <p class="card-text">{{ $producto->descripcion }}</p>
                     <p><strong>Precio:</strong> ${{ number_format($producto->precio, 2) }}</p>
-                    <a href="#" class="btn btn-primary">Agregar al carrito</a>
+                    <form action="{{ route('carrito.store') }}" method="POST" class="d-inline">
+                        @csrf
+                        <input type="hidden" name="id_producto" value="{{ $producto->id }}">
+                        <input type="hidden" name="cantidad_productos" value="1">
+
+                        <button type="submit" class="btn btn-primary">Agregar al carrito</button>
+                    </form>
+
                 </div>
             </div>
         </div>

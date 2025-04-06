@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Contracts\ProductoServiceInterface;
 use App\Models\Categoria;
 use App\Models\CondicionCabello;
+use App\Models\TipoCabello;
 
 class ProductoController extends Controller
 {
@@ -27,8 +28,9 @@ class ProductoController extends Controller
     $productos = Producto::with(['categoria', 'condicionCabello'])->get();
     $categorias = Categoria::all();
     $condiciones = CondicionCabello::all();
+    $tipos = TipoCabello::all();
 
-    return view('productos.index', compact('productos', 'categorias', 'condiciones'));
+    return view('productos.index', compact('productos', 'categorias', 'condiciones', 'tipos'));
 }
 
     /**
@@ -38,8 +40,9 @@ class ProductoController extends Controller
     {
         $categorias = Categoria::all();
         $condiciones = CondicionCabello::all();
+        $tipos = TipoCabello::all();
 
-        return view('productos.create', compact('categorias','condiciones'));
+        return view('productos.create', compact('categorias','condiciones','tipos'));
     }
 
     /**
@@ -54,12 +57,14 @@ class ProductoController extends Controller
             'cantidad_disponible' => 'required|integer',
             'id_categoria' => 'required|exists:categorias,id',
             'id_condicion' => 'required|exists:condicion_cabellos,id',
+            'id_tipo' => 'required|exists:tipo_cabellos,id',
             'imagen' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
         ]);
 
         $rutaImagen = null;
             if ($request->hasFile('imagen')) {
-                $rutaImagen = $request->file('imagen')->store('productos', 'public'); // Guarda en storage/app/public/productos
+                $nombreImagen = $request->file('imagen')->getClientOriginalName();
+                $rutaImagen = $request->file('imagen')->store('productos', 'public'); 
             }
 
         Producto::create([
@@ -69,12 +74,12 @@ class ProductoController extends Controller
             'cantidad_disponible' => $request->cantidad_disponible,
             'id_categoria' => $request->id_categoria,
             'id_condicion' => $request->id_condicion,
-            'id_tipo' => $request->tipo_cabello,
+            'id_tipo' => $request->id_tipo,
             'imagen' => $rutaImagen,
         ]);
 
 
-        return redirect()->route('productos.create')->with('success', 'Producto creado exitosamente!');
+        return redirect()->route('productos.index')->with('success', 'Producto creado exitosamente!');
     }
 
     /**

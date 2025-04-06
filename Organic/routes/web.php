@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Middleware\EsAdministrador;
 use Illuminate\Support\Facades\Auth;
@@ -19,6 +20,16 @@ Route::put('/productos/{producto}', [ProductoController::class, 'update'])->name
 Route::delete('/productos/{producto}', [ProductoController::class, 'destroy'])->name('productos.destroy');
 });
 
+
+Route::middleware(['auth'])->group(function () {
+
+Route::get('/carrito/index', [CarritoController::class, 'index'])->name('carrito.index');
+Route::get('/carrito/create', [CarritoController::class, 'create'])->name('carrito.create');
+Route::post('/carrito/store', [CarritoController::class, 'store'])->name('carrito.store');
+Route::delete('/carrito/vaciar', [CarritoController::class, 'vaciar'])->name('carrito.vaciar');
+Route::delete('/carrito/{id}', [CarritoController::class, 'destroy'])->name('carrito.destroy');
+});
+
 //REGISTRO
 
 Route::get('/registro', [RegisteredUserController::class, 'create'])->name('registro');
@@ -31,3 +42,5 @@ Route::post('/logout', function () {
     Auth::logout();
     return redirect('/');
 })->name('logout');
+
+

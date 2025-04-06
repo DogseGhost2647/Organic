@@ -23,7 +23,6 @@ class RegisteredUserController extends Controller
             'telefono' => ['required', 'string', 'max:20', 'unique:usuarios'],
             'direccion' => ['required', 'string', 'max:255'],
             'password' => ['required', 'confirmed', PasswordRule::defaults()],
-            'rol' => ['required', 'in:cliente,administrador'],
         ]);
 
         $usuario = Usuario::create([
@@ -32,11 +31,11 @@ class RegisteredUserController extends Controller
             'telefono' => $request->telefono,
             'direccion' => $request->direccion,
             'password' => Hash::make($request->password),
-            'rol' => $request->rol,
+            'rol' => 'cliente',
         ]);
 
         event(new Registered($usuario));
 
-        return redirect()->route('login')->with('success', 'Registro exitoso. Inicia sesión.');
+        return redirect()->route('login.form')->with('success', 'Registro exitoso. Inicia sesión.');
     }
 }

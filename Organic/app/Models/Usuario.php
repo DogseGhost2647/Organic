@@ -16,18 +16,19 @@ class Usuario extends Authenticatable implements AuthenticatableContract
 
     protected $casts = ['password' => 'hashed'];
 
-    public function getAuthIdentifierName()
-    {
-    return 'correo';
-    }
-
-    public function carrito(){
-        return $this->belongsTo(Carrito::class,'id_carrito');
+    public function carritos(){
+        return $this->hasMany(Carrito::class,'id_usuario');
     }
     
     public function username()
     {
     return 'correo';
     }
+
+    public function isAdmin()
+    {
+        return $this->rol === 'administrador';
+    }
+
 
 }

@@ -10,6 +10,9 @@
         body {
             background-color: #f8f9fa;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         /* Navbar estilos */
@@ -51,9 +54,13 @@
             font-weight: bold;
         }
 
-        .container {
-            text-align: center;
-            margin-top: 5rem;
+        /* Contenedor principal flex para centrar contenido */
+        .main-content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
         }
 
         /* Cards */
@@ -107,6 +114,10 @@
             text-decoration: underline;
             color: #8e44ad;
         }
+        
+        .card {
+        margin: auto;
+        }
     </style>
 </head>
 <body>
@@ -117,20 +128,14 @@
         <a class="navbar-brand text-white" href="/home">O-RGANIC</a>
 
         <div class="d-flex align-items-center">
-        @auth
-            @if (Auth::user() && Auth::user()->isAdmin())
-                <a class="nav-link text-white me-3 position-relative" href="{{ route('productos.index') }}">Gestionar Productos</a>
-            @endif
-
-        @endauth
-
             <a class="nav-link text-white me-3 position-relative" href="/carrito/index">
-                <i class="bi bi-cart-fill fs-5"></i> Carrito
+            <i class="bi bi-cart-fill fs-5"></i> Carrito
             @php
                 $cartCount = \App\Models\Carrito::where('id_usuario', Auth::id())->sum('cantidad_productos');
             @endphp
 
             <span class="cart-badge">{{ $cartCount }}</span>
+
             </a>
 
             <form method="POST" action="{{ route('logout') }}">
@@ -145,7 +150,7 @@
     </div>
 </nav>
 
-<div class="container">
+<div class="main-content">
     @yield('content')
 </div>
 

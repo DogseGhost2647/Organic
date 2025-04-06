@@ -13,7 +13,7 @@
     <a href="/registro" class="btn-register">Registrarse</a>
     <a href="/login" class="login-link">Iniciar Sesión</a>
     <div class="container swiper">
-        <h2>Productos mas vendidos!</h2>
+        <h2>Productos disponibles</h2>
     </div>
     <div class="row">
         @foreach ($productos as $producto)

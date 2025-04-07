@@ -33,4 +33,7 @@ class Carrito extends Model
             $carrito->precio_total = $producto->precio * $carrito->cantidad_productos;
         });
     }
+
+    public $timestamps=false;
+    
 }

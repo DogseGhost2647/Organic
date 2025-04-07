@@ -16,7 +16,9 @@ class CarritoController extends Controller
 
     public function __construct(CarritoService $carritoService)
     {
+
         $this->carritoService = $carritoService;
+
     }
 
     public function index()
@@ -75,12 +77,17 @@ class CarritoController extends Controller
 
     public function show(Carrito $carrito)
     {
-        return view('carrito.show', compact('carrito'));
+        //
     }
 
     public function edit(Carrito $carrito)
     {
-        return view('carrito.edit', compact('carrito'));
+
+    $usuarios = Usuario::all();
+    $productos = Producto::all();
+
+    return view('carritos.edit', compact('carrito', 'usuarios', 'productos'));
+    
     }
 
     public function update(Request $request, Carrito $carrito)

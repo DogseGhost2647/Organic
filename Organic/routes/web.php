@@ -1,10 +1,10 @@
 <?php
 
+use App\Http\Controllers\CarritoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\AuthController;
-use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Middleware\EsAdministrador;
 use Illuminate\Support\Facades\Auth;

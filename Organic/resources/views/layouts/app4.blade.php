@@ -117,6 +117,14 @@
         <a class="navbar-brand text-white" href="/home">O-RGANIC</a>
 
         <div class="d-flex align-items-center">
+
+        <form method="GET" action="{{ route('productos2.index') }}" class="d-flex me-3" role="search">
+            <input type="text" name="search" class="form-control rounded-pill me-2" placeholder="Buscar productos..." value="{{ request('search') }}" style="max-width: 250px;">
+        <button type="submit" class="btn btn-light rounded-pill">
+            <i class="bi bi-search"></i>
+        </button>
+         </form>
+
         @auth
             @if (Auth::user() && Auth::user()->isAdmin())
                 <a class="nav-link text-white me-3 position-relative" href="{{ route('productos.index') }}">Gestionar Productos</a>

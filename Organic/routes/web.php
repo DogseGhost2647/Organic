@@ -15,11 +15,12 @@ Route::get('/home', [UsuarioController::class, 'home'])->name('home');
 Route::middleware(['auth',EsAdministrador::class])->group(function () {
 Route::get('/productos/create', [ProductoController::class, 'create'])->name('productos.create');
 Route::post('/productos/store', [ProductoController::class, 'store'])->name('productos.store');
-Route::get('/productos/index', [ProductoController::class, 'index'])->name('productos.index');
+Route::get('/productos/index', [ProductoController::class, 'indexAdmin'])->name('productos.index');
 Route::put('/productos/{producto}', [ProductoController::class, 'update'])->name('productos.update');
 Route::delete('/productos/{producto}', [ProductoController::class, 'destroy'])->name('productos.destroy');
 });
 
+Route::get('/productos2', [ProductoController::class, 'indexClientes'])->name('productos2.index');
 
 Route::middleware(['auth'])->group(function () {
 
@@ -42,5 +43,6 @@ Route::post('/logout', function () {
     Auth::logout();
     return redirect('/');
 })->name('logout');
+
 
 

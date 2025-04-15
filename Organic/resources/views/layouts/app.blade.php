@@ -73,7 +73,12 @@
             <ul class="navbar-nav align-items-center">
                 <li class="nav-item me-3">
                     <a href="{{ route('productos.create') }}" class="btn btn-light border border-success text-success rounded-pill px-3">
-                        Agregar Producto
+                        Agregar nuevo producto
+                    </a>
+                </li>
+                <li class="nav-item me-3">
+                    <a href="{{ route('productos.stock') }}" class="btn btn-light border border-success text-success rounded-pill px-3">
+                        Agregar existencias
                     </a>
                 </li>
                 <li class="nav-item">

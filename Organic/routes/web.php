@@ -16,6 +16,8 @@ Route::middleware(['auth',EsAdministrador::class])->group(function () {
 Route::get('/productos/create', [ProductoController::class, 'create'])->name('productos.create');
 Route::post('/productos/store', [ProductoController::class, 'store'])->name('productos.store');
 Route::get('/productos/index', [ProductoController::class, 'index'])->name('productos.index');
+Route::get('/productos/stock', [ProductoController::class, 'showAgregarExistenciasForm'])->name('productos.stock');
+Route::post('/productos/stock/agregar', [ProductoController::class, 'agregarExistencias'])->name('productos.stock.agregar');
 Route::put('/productos/{producto}', [ProductoController::class, 'update'])->name('productos.update');
 Route::delete('/productos/{producto}', [ProductoController::class, 'destroy'])->name('productos.destroy');
 });

@@ -8,7 +8,7 @@ class Producto extends Model
 {
     protected $table = 'productos';
 
-    protected $fillable = ['nombre','descripcion','precio','cantidad_disponible','id_categoria','id_condicion','id_tipo'];
+    protected $fillable = ['nombre','descripcion','precio','cantidad_disponible','id_categoria','id_condicion','id_tipo','imagen'];
 
     public function categoria(){
         return $this->belongsTo(Categoria::class, 'id_categoria');
@@ -28,4 +28,8 @@ class Producto extends Model
 
     public $timestamps=false;
 
+    public function setCantidadDisponibleAttribute($value){
+    $this->attributes['cantidad_disponible'] = $value;
+    $this->attributes['estado'] = $value > 0 ? 'disponible' : 'agotado';
+    }
 }

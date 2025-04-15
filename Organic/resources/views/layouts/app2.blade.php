@@ -57,6 +57,11 @@
         .login-link:hover {
             text-decoration: underline;
         }
+        .card img {
+    width: 100%;
+    height: 200px; /* Ajusta este valor según el tamaño de tu tarjeta */
+    object-fit: cover; /* Mantiene la proporción */
+}
     </style>
 </head>
 <body>

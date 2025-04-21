@@ -2,27 +2,6 @@
 
 @section('content')
 
-<!-- Hero principal -->
-<section class="text-center" style="background: url('/storage/banner-organic.jpg') no-repeat center center; background-size: cover;">
-    <div class="container py-5" style="background-color: rgba(255, 255, 255, 0.8); border-radius: 15px;">
-        <h1 class="fw-bold display-4">
-            Bienvenido a 
-            <span style="color: #6c9724;">Or-ganic</span>
-        </h1>
-        <p class="lead text-muted">
-            Cuidamos tu belleza de forma natural.
-        </p>
-        <div class="d-flex justify-content-center gap-3 mt-4">
-            <a href="/registro" class="btn" style="background-color: #6c9724; color: white; padding: 10px 24px; border-radius: 30px; font-size: 18px;">
-                Registrarse
-            </a>
-            <a href="/login" class="btn" style="border: 2px solid #6c9724; color: #6c9724; padding: 10px 24px; border-radius: 30px; font-size: 18px;">
-                Iniciar Sesión
-            </a>
-        </div>
-    </div>
-</section>
-
 <!-- Sección de Productos -->
 <div class="container py-5">
     <div class="mb-5">

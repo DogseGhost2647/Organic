@@ -72,6 +72,11 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav align-items-center">
                 <li class="nav-item me-3">
+                    <a href="{{ url('FPDF/Reporte.php') }}" target="_blank" class="btn btn-light border border-success text-success rounded-pill px-3">
+                        Generar reporte
+                    </a>
+                </li>
+                <li class="nav-item me-3">
                     <a href="{{ route('productos.create') }}" class="btn btn-light border border-success text-success rounded-pill px-3">
                         Agregar nuevo producto
                     </a>

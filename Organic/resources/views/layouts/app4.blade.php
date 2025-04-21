@@ -9,36 +9,36 @@
     <style>
         body {
             background-color: #f8f9fa;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            margin: 0;
         }
 
         /* Navbar estilos */
         .navbar {
             background-color: #6c9724 !important;
-            padding: 15px 30px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 0.8rem 1rem;
         }
-        .navbar .navbar-brand {
+        .navbar-brand {
             font-weight: bold;
+            font-size: 1.7rem;
             letter-spacing: 1px;
+            color: #ffffff !important;
         }
-        .navbar .nav-link,
-        .navbar .btn-link {
-            color: white !important;
+        .navbar .nav-link {
+            color: #ffffff !important;
             font-weight: 500;
-            transition: color 0.3s, transform 0.3s;
+            transition: color 0.3s;
         }
-        .navbar .nav-link:hover,
-        .navbar .btn-link:hover {
-            color: #e8f5c8 !important;
-            transform: scale(1.05);
+        .navbar .nav-link:hover {
+            color: #d4edda !important;
+            text-decoration: underline;
         }
 
         .cart-icon {
             position: relative;
             display: inline-block;
         }
-
         .cart-badge {
             position: absolute;
             top: -5px;
@@ -52,90 +52,80 @@
         }
 
         .container {
-            text-align: center;
-            margin-top: 5rem;
+            margin-top: 4rem;
         }
 
         /* Cards */
         .card {
             width: 100%;
             max-width: 400px;
-            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
-            padding: 25px;
-            border-radius: 15px;
+            background: #ffffff;
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
             border: none;
-            transition: transform 0.3s;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.2s;
         }
-
         .card:hover {
             transform: translateY(-5px);
         }
+        .card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
 
         /* Botones */
-        .btn-primary {
-            background-color: #4c4cff;
+        .btn-success {
+            background-color: #6c9724;
             border: none;
-            border-radius: 8px;
-        }
-        .btn-primary:hover {
-            background-color: #3a3adc;
-        }
-
-        .btn-register {
-            background-color: #9b59b6;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 10px;
+            padding: 10px 24px;
+            border-radius: 30px;
             font-size: 18px;
-            border: none;
             transition: background-color 0.3s;
         }
-        .btn-register:hover {
-            background-color: #8e44ad;
+        .btn-success:hover {
+            background-color: #597a1d;
         }
 
-        /* Link de login */
-        .login-link {
-            display: block;
-            margin-top: 10px;
-            color: #9b59b6;
-            text-decoration: none;
-            font-size: 16px;
-            transition: color 0.3s;
+        .btn-outline-success {
+            color: #6c9724;
+            border-color: #6c9724;
+            font-weight: 500;
+            transition: background-color 0.3s, color 0.3s;
         }
-        .login-link:hover {
-            text-decoration: underline;
-            color: #8e44ad;
+        .btn-outline-success:hover {
+            background-color: #6c9724;
+            color: white;
         }
-        .card img {
-    width: 100%;
-    height: 200px; /* Ajusta este valor según el tamaño de tu tarjeta */
-    object-fit: cover; /* Mantiene la proporción */
-}
+
+        .join-section {
+            background-color: #6c9724; 
+            color: #f8f9fa;
+            border-radius: 15px;
+            margin-bottom: 10px;
+        }
+
     </style>
 </head>
 <body>
 
 <nav class="navbar navbar-expand-lg">
     <div class="container-fluid d-flex justify-content-between align-items-center">
-
-        <a class="navbar-brand text-white" href="/home">O-RGANIC</a>
-
+        <a class="navbar-brand" href="/home">O-RGANIC</a>
         <div class="d-flex align-items-center">
-        @auth
-            @if (Auth::user() && Auth::user()->isAdmin())
-                <a class="nav-link text-white me-3 position-relative" href="{{ route('productos.index') }}">Gestionar Productos</a>
-            @endif
-
-        @endauth
+            @auth
+                @if (Auth::user() && Auth::user()->isAdmin())
+                    <a class="nav-link text-white me-3 position-relative" href="{{ route('productos.index') }}">Gestionar Productos</a>
+                @endif
+            @endauth
 
             <a class="nav-link text-white me-3 position-relative" href="/carrito/index">
                 <i class="bi bi-cart-fill fs-5"></i> Carrito
-            @php
-                $cartCount = \App\Models\Carrito::where('id_usuario', Auth::id())->sum('cantidad_productos');
-            @endphp
-
-            <span class="cart-badge">{{ $cartCount }}</span>
+                @php
+                    $cartCount = \App\Models\Carrito::where('id_usuario', Auth::id())->sum('cantidad_productos');
+                @endphp
+                <span class="cart-badge">{{ $cartCount }}</span>
             </a>
 
             <form method="POST" action="{{ route('logout') }}">
